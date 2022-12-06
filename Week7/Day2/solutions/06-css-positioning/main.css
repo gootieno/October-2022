@@ -5,7 +5,7 @@ html, body {
 .container {
     background-color: #2b2d2f;
     position: relative;
-    height: 200px;
+    height: 1000px;
 }
 
 .element {
@@ -57,7 +57,7 @@ html, body {
     left: 40px;
     right: 0;
     top: 0;
-    z-index: -2;
+    z-index: 1;
 }
 
 #orange-box {
@@ -69,4 +69,9 @@ html, body {
     right: 0;
     top: 0;
     z-index: -1;
+}
+
+.scroll-stop {
+    height: 200px;
+    background-color: aqua;
 }
