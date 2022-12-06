@@ -75,3 +75,11 @@ html, body {
     height: 1000px;
     background-color: aqua;
 }
+
+#green-box {
+    position: sticky;
+    background-color: black;
+    top: 0;
+    left: 43%;
+    /* without top /left /bottom/ or right styles will not kick in.  */
+}
