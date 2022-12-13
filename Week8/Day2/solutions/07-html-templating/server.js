@@ -119,10 +119,15 @@ const server = http.createServer((req, res) => {
     // Phase 3: GET /dogs/:dogId
     if (req.method === "GET" && req.url.startsWith("/dogs/")) {
       const urlParts = req.url.split("/");
+
+      console.log("url parts ", urlParts);
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
+
+        console.log("dog id ", dogId);
         const dog = dogs.find((dog) => dog.dogId == dogId);
 
+        console.log("dog ", dog);
         // Your code here
         const htmlPage = fs.readFileSync("./views/dog-details.html", "utf-8");
 
