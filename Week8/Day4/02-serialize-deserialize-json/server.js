@@ -10,19 +10,24 @@ const server = http.createServer((req, res) => {
 
   req.on("end", () => {
     // Parse the body of the request as JSON if Content-Type header is
-      // application/json
+    // application/json
     // Parse the body of the request as x-www-form-urlencoded if Content-Type
-      // header is x-www-form-urlencoded
+    // header is x-www-form-urlencoded
     if (reqBody) {
-      req.body = reqBody
-        .split("&")
-        .map((keyValuePair) => keyValuePair.split("="))
-        .map(([key, value]) => [key, value.replace(/\+/g, " ")])
-        .map(([key, value]) => [key, decodeURIComponent(value)])
-        .reduce((acc, [key, value]) => {
-          acc[key] = value;
-          return acc;
-        }, {});
+      if (req.headers['content-type'] === 'application/json') {
+        req.body = JSON.parse(reqBody)
+      }
+      if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+        req.body = reqBody
+          .split("&")
+          .map((keyValuePair) => keyValuePair.split("="))
+          .map(([key, value]) => [key, value.replace(/\+/g, " ")])
+          .map(([key, value]) => [key, decodeURIComponent(value)])
+          .reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+          }, {});
+      }
 
       // Log the body of the request to the terminal
       console.log(req.body);
@@ -33,6 +38,9 @@ const server = http.createServer((req, res) => {
     };
 
     // Return the `resBody` object as JSON in the body of the response
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'application/json')
+    return res.end(JSON.stringify(resBody))
   });
 });
 
