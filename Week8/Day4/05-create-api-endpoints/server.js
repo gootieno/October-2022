@@ -54,6 +54,9 @@ const server = http.createServer((req, res) => {
     // GET /dogs
     if (req.method === 'GET' && req.url === '/dogs') {
       // Your code here
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'application/json')
+      return res.end(JSON.stringify(dogs))
     }
 
     // GET /dogs/:dogId
@@ -62,6 +65,10 @@ const server = http.createServer((req, res) => {
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
         // Your code here
+        const dog = dogs.find(el => el.dogId == dogId)
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json')
+        return res.end(JSON.stringify(dog))
       }
     }
 
@@ -69,6 +76,16 @@ const server = http.createServer((req, res) => {
     if (req.method === 'POST' && req.url === '/dogs') {
       const { name, age } = req.body;
       // Your code here
+      let dogId = getNewDogId();
+      let newDog = {
+        dogId: dogId,
+        name: name,
+        age: age
+      }
+      dogs.push(newDog)
+      res.statusCode = 201;
+      res.setHeader('Content-Type', 'application/json')
+      return res.end(JSON.stringify(newDog))
     }
 
     // PUT or PATCH /dogs/:dogId
@@ -77,6 +94,13 @@ const server = http.createServer((req, res) => {
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
         // Your code here
+        const dog = dogs.find(dog => dog.dogId == dogId)
+        const {name, age} = req.body
+        dog.name = name || dog.name;
+        dog.age = age || dog.age;
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json')
+        return res.end(JSON.stringify(dog))
       }
     }
 
@@ -86,6 +110,12 @@ const server = http.createServer((req, res) => {
       if (urlParts.length === 3) {
         const dogId = urlParts[2];
         // Your code here
+        const dogIndex = dogs.findIndex(el => el.dogId == dogId)
+        dogs.splice(dogIndex, 1)
+
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify("Successfully Deleted"))
       }
     }
 
