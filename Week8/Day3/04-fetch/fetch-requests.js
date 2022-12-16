@@ -107,3 +107,7 @@ fetch('/products')
     success: res.ok,
     headers: res.headers.get('Content-Type')
   }))
+
+
+
+  
