@@ -58,8 +58,13 @@ export const removeLast = () => {
     /*-------------------- Remove the last dog card ----------------------- */
     // Your code here
 
-    const allDogs = document.querySelectorAll("ul");
-    if (allDogs.length) allDogs[allDogs.length - 1].remove();
-    else alert("No Dogs Left :(");
+    try {
+      const allDogs = document.querySelectorAll("ul")[0].children;
+      console.log("all dogs ul ", allDogs);
+      if (allDogs.length) allDogs[allDogs.length - 1].remove();
+      else alert("No Dogs Left :(");
+    } catch (e) {
+      console.log(e);
+    }
   });
 };
